@@ -155,6 +155,10 @@ const Content = () => {
             border: 'none',
             outline: 'none',
           }}
+          _active={{
+            border: 'none',
+            outline: 'none',
+          }}
           onClick={onCopy}
         >
           {hasCopied ? 'Copied' : 'Copy'}

@@ -10,7 +10,7 @@ interface JsxProps {
 export const Jsx = ({ code, memo, typescript }: JsxProps) => {
   return `import React from "react"
             function SvgComponent(props${
-              typescript && ': React.SVGProps<SVGSVGElement>'
+              typescript ? ': React.SVGProps<SVGSVGElement>' : ''
             }) {
             return (
                ${code}

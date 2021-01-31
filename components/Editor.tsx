@@ -48,6 +48,7 @@ const Editor: React.FC<Props> = ({
         bg="#282a36"
         px={4}
         py={2}
+        letterSpacing="1px"
       >
         {name}
       </Text>
@@ -71,7 +72,7 @@ const Editor: React.FC<Props> = ({
           autoCloseBrackets: true,
           viewportMargin: Infinity,
         }}
-        onChange={type === 'editor' ? debounce(onChange, 200) : null}
+        onChange={type === 'editor' ? debounce(onChange, 500) : null}
         className="xml-editor"
         autoScroll
       />

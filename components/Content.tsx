@@ -1,8 +1,9 @@
 import { Flex, useToast, Skeleton } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
 import createJsxTemplate from '../utils/createJsxTemplate';
+import Sidebar from './Sidebar';
 
 const Editor = dynamic(import('./Editor'), {
   ssr: false,
@@ -17,6 +18,16 @@ interface ApiResponse {
 const Content = () => {
   const [value, setValue] = useState('');
   const [code, setCode] = useState('');
+  const [checkedItems, setCheckedItems] = React.useState({
+    memo: false,
+    typescript: false,
+    singleQuote: false,
+    semi: false,
+  });
+
+  const allChecked = Object.values(checkedItems).every(Boolean);
+  const isIndeterminate =
+    Object.values(checkedItems).some(Boolean) && !allChecked;
   const toast = useToast();
 
   useEffect(() => {
@@ -26,16 +37,27 @@ const Content = () => {
           svg: value,
         });
 
-        const FormattedCode = createJsxTemplate({
-          code: data.code,
-          memo: true,
-          typescript: true,
-        });
+        const FormattedCode = createJsxTemplate(
+          {
+            code: data.code,
+            memo: checkedItems.memo,
+            typescript: checkedItems.typescript,
+          },
+          {
+            singleQuote: checkedItems.singleQuote,
+            semi: checkedItems.semi,
+            jsxSingleQuote: checkedItems.singleQuote,
+          }
+        );
 
         setCode(FormattedCode);
       } catch (error) {
+        setCode('');
         toast({
-          title: error?.response?.message || 'Error Occurred',
+          title:
+            (typeof error?.response?.data?.message === 'string' &&
+              error?.response?.data?.message) ||
+            'Error Occurred',
           status: 'error',
           duration: 3000,
           isClosable: true,
@@ -43,12 +65,19 @@ const Content = () => {
       }
     };
 
-    if (value) {
+    if (value.trim().length) {
+      setCode('Loading...');
       generateJsx();
     } else {
       setCode('');
     }
-  }, [value]);
+  }, [
+    value,
+    checkedItems.memo,
+    checkedItems.typescript,
+    checkedItems.semi,
+    checkedItems.singleQuote,
+  ]);
 
   return (
     <Flex
@@ -60,14 +89,41 @@ const Content = () => {
       <Flex
         flex={['1', '1', '0.5']}
         minW={['300px', '350px', '250px']}
+        minH="200px"
         m={2}
         bg="var(--secondary)"
         shadow="md"
-      ></Flex>
-      <Flex flex="1" p={2} overflowX="auto" minW={['300px', '350px', '250px']}>
-        <Editor name="svg input" type="editor" {...{ setValue }} />
+      >
+        <Sidebar
+          {...{
+            checkedItems,
+            setCheckedItems,
+            allChecked,
+            isIndeterminate,
+          }}
+        />
       </Flex>
-      <Flex flex="1" p={2} overflowX="auto" minW={['300px', '350px', '250px']}>
+      <Flex
+        flex="1"
+        p={2}
+        overflowX="auto"
+        minW={['300px', '350px', '250px']}
+        minH="200px"
+      >
+        <Editor
+          name="svg input"
+          type="editor"
+          {...{ setValue }}
+          defaultValue={value}
+        />
+      </Flex>
+      <Flex
+        flex="1"
+        p={2}
+        overflowX="auto"
+        minW={['300px', '350px', '250px']}
+        minH="200px"
+      >
         <Editor readOnly defaultValue={code} name="jsx output" type="preview" />
       </Flex>
     </Flex>

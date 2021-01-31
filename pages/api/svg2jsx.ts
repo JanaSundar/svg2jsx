@@ -19,7 +19,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     res.statusCode = 200;
     res.json({ success: true, code: data });
   } catch (error) {
+    console.log(error);
+    
     res.statusCode = 400;
-    res.json({ success: false, message: error.message || 'Invalid Input' });
+    res.json({ success: false, message: error || 'Invalid Input' });
   }
 };

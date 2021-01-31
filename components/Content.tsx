@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import axios from 'axios';
 import createJsxTemplate from '../utils/createJsxTemplate';
 import Sidebar from './Sidebar';
+import { initialValue } from '../utils';
 
 const Editor = dynamic(import('./Editor'), {
   ssr: false,
@@ -16,7 +17,7 @@ interface ApiResponse {
 }
 
 const Content = () => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(initialValue);
   const [code, setCode] = useState('');
   const [checkedItems, setCheckedItems] = React.useState({
     memo: false,

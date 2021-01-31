@@ -1,6 +1,7 @@
-import { Flex, Text, Link as ChakraLink, Image } from '@chakra-ui/react';
+import { Flex, Text, Link as ChakraLink } from '@chakra-ui/react';
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Navbar = () => {
   return (
@@ -14,7 +15,7 @@ const Navbar = () => {
     >
       <Link href="/">
         <ChakraLink outline="none" border="none">
-          <Image src="/Logo.svg" alt="Logo" width="100%" height="50%" />
+          <Image src="/Logo.svg" alt="Logo" width="40%" height="40%" />
         </ChakraLink>
       </Link>
 
@@ -29,7 +30,7 @@ const Navbar = () => {
         href="https://github.com/JanaSundar/svg2jsx"
         textAlign="center"
       >
-        <Image src="/Github.svg" alt="Logo" width="100%" height="50%" />
+        <Image src="/Github.svg" alt="Github" width="40%" height="40%" />
       </ChakraLink>
     </Flex>
   );

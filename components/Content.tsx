@@ -22,7 +22,7 @@ const Content = () => {
     memo: false,
     typescript: false,
     singleQuote: false,
-    semi: false,
+    semi: true,
   });
 
   const allChecked = Object.values(checkedItems).every(Boolean);

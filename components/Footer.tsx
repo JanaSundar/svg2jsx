@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <Box bg="var(--primary)" color="var(--text)" p={4}>
       <Text textAlign="center" fontWeight="bold">
-        Build with <span aria-label="icon">❤️</span> by Jana
+        Developed by Jana
       </Text>
     </Box>
   );

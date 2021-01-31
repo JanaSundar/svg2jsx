@@ -1,4 +1,10 @@
-import { Flex, useToast, Skeleton } from '@chakra-ui/react';
+import {
+  Flex,
+  useToast,
+  Skeleton,
+  useClipboard,
+  Button,
+} from '@chakra-ui/react';
 import React, { useCallback, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
@@ -19,6 +25,7 @@ interface ApiResponse {
 const Content = () => {
   const [value, setValue] = useState(initialValue);
   const [code, setCode] = useState('');
+  const { hasCopied, onCopy } = useClipboard(code);
   const [checkedItems, setCheckedItems] = React.useState({
     memo: false,
     typescript: false,
@@ -124,7 +131,34 @@ const Content = () => {
         overflowX="auto"
         minW={['300px', '350px', '250px']}
         minH="200px"
+        position="relative"
+        className="preview-editor"
       >
+        <Button
+          size="sm"
+          bg="var(--secondary)"
+          color="var(--text)"
+          position="absolute"
+          top="10px"
+          right="10px"
+          fontWeight="bold"
+          className="ch-btn"
+          display="none"
+          transition="ease-in"
+          animation="ease-in"
+          border="none"
+          outline="none"
+          _hover={{
+            background: 'var(--secondary)',
+          }}
+          _focus={{
+            border: 'none',
+            outline: 'none',
+          }}
+          onClick={onCopy}
+        >
+          {hasCopied ? 'Copied' : 'Copy'}
+        </Button>
         <Editor readOnly defaultValue={code} name="jsx output" type="preview" />
       </Flex>
     </Flex>

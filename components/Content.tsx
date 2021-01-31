@@ -135,12 +135,12 @@ const Content = () => {
         className="preview-editor"
       >
         <Button
-          size="sm"
-          bg="var(--secondary)"
-          color="var(--text)"
+          size="xs"
+          bg="var(--text)"
+          color="var(--primary)"
           position="absolute"
-          top="10px"
-          right="10px"
+          top="20px"
+          right="20px"
           fontWeight="bold"
           className="ch-btn"
           display="none"
@@ -149,7 +149,7 @@ const Content = () => {
           border="none"
           outline="none"
           _hover={{
-            background: 'var(--secondary)',
+            background: 'var(--text)',
           }}
           _focus={{
             border: 'none',
@@ -160,6 +160,7 @@ const Content = () => {
             outline: 'none',
           }}
           onClick={onCopy}
+          zIndex="100"
         >
           {hasCopied ? 'Copied' : 'Copy'}
         </Button>

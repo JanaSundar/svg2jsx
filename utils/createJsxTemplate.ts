@@ -13,7 +13,11 @@ export const Jsx = ({ code, memo, typescript }: JsxProps) => {
               typescript ? ': React.SVGProps<SVGSVGElement>' : ''
             }) {
             return (
-               ${code.includes('svg') ? code.replace('>', '{...props}>') : code}
+               ${
+                 code.substr(code.indexOf('>') - 1).includes('/')
+                   ? code.replace('/>', '{...props} />')
+                   : code.replace('>', '{...props}>')
+               }
             )}
             export default ${memo ? 'React.memo(SvgComponent)' : 'SvgComponent'}
 `;

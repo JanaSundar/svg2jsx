@@ -59,7 +59,7 @@ const Content = () => {
         );
 
         setCode(FormattedCode);
-      } catch (error) {
+      } catch (error) {        
         setCode('');
         toast({
           title:

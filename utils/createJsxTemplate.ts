@@ -8,13 +8,16 @@ interface JsxProps {
 }
 
 export const Jsx = ({ code, memo, typescript }: JsxProps) => {
+  const indexOfBrack = code.indexOf('>');
+
+
   return `import React from "react"
             function SvgComponent(props${
               typescript ? ': React.SVGProps<SVGSVGElement>' : ''
             }) {
             return (
                ${
-                 code.substr(code.indexOf('>') - 1).includes('/')
+                 code.substring(indexOfBrack - 1)[0].includes('/')
                    ? code.replace('/>', '{...props} />')
                    : code.replace('>', '{...props}>')
                }
